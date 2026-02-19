@@ -1,0 +1,10 @@
+
+content
+- text
+- image
+
+date/time written
+
+sender
+receiver
+
