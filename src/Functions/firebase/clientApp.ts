@@ -10,5 +10,5 @@ import { getStorage } from "firebase/storage";
 export const firebaseApp = initializeApp();
 
 export const auth = getAuth(firebaseApp);
-export const db = getFirestore(firebaseApp);
+export const db = getFirestore();
 export const storage = getStorage(firebaseApp);
