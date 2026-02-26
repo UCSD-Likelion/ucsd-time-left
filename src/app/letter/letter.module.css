@@ -1,0 +1,716 @@
+.LetterLayout {
+  background-color: #fcfcfc;
+  display: flex;
+  flex-direction: row;
+  min-height: 100dvh;
+}
+
+/* Sidebar (login gradient colors) */
+.Sidebar {
+  background: #286096;
+  background: linear-gradient(-315deg, rgba(40, 96, 150, 1) 0%, rgba(21, 39, 72, 1) 100%);
+  width: 340px;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.SidebarTitle {
+  color: #fcfcfc;
+  font-weight: 800;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.SidebarSubtitle {
+  margin: 8px 0 0 0;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.SidebarSection {
+  margin-top: 18px;
+  opacity: 0.95;
+}
+
+.SidebarSectionLabel {
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  opacity: 0.85;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.FolderList {
+  margin-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.FolderItem,
+.FolderItemActive {
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.FolderItem {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.FolderItemActive {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Buttons */
+.PrimaryButton {
+  margin-top: 6px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.PrimaryButton:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.SecondaryButton {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cfe0ff;
+  background: #eef4ff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.SecondaryButton:hover {
+  background: #e4eeff;
+}
+
+.TertiaryButton {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+  background: white;
+  cursor: pointer;
+}
+
+.TertiaryButton:hover {
+  background: #fafafa;
+}
+
+/* Content */
+.Content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ContentGrid {
+  width: 100%;
+  max-width: 1040px;
+  padding: 22px;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 16px;
+}
+
+/* Cards */
+.ListCard,
+.PreviewCard {
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  background: white;
+  overflow: hidden;
+}
+
+.ListHeader {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ListHeaderTitle {
+  font-weight: 800;
+}
+
+.ListBody {
+  display: grid;
+}
+
+/* Rows */
+.ListRow {
+  text-align: left;
+  padding: 12px;
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  background: white;
+  cursor: pointer;
+}
+
+.ListRow:hover {
+  background: #fafcff;
+}
+
+.ListRowActive {
+  background: #f5f8ff;
+}
+
+.RowTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.FromLine {
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.UnreadDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #286096;
+  display: inline-block;
+}
+
+.FromName {
+  color: #111827;
+}
+
+.RowDate {
+  color: #666;
+  font-size: 12px;
+}
+
+.RowSubject {
+  margin-top: 4px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.RowPreview {
+  margin-top: 4px;
+  color: #555;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* Preview */
+.PreviewCard {
+  padding: 18px;
+  min-height: 420px;
+}
+
+.PreviewHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.PreviewSubject {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.PreviewMeta {
+  margin-top: 6px;
+  color: #555;
+}
+
+.PreviewFrom {
+  font-weight: 800;
+}
+
+.PreviewDate {
+  color: #666;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.Divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 14px 0;
+}
+
+.PreviewBody {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  color: #222;
+}
+
+.PreviewActions {
+  margin-top: 18px;
+  display: flex;
+  gap: 10px;
+}
+
+.StatusText {
+  padding: 14px;
+  color: #666;
+}
+
+.ErrorText {
+  padding: 14px;
+  color: #b42318;
+  background: #fff2f0;
+  border-bottom: 1px solid #ffe1dd;
+}
+
+.HintText {
+  margin-top: 14px;
+  color: #666;
+  font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .LetterLayout {
+    flex-direction: column;
+  }
+
+  .Sidebar {
+    width: auto;
+  }
+
+  .ContentGrid {
+    grid-template-columns: 1fr;
+  }
+}
+.LetterLayout {
+  background-color: #fcfcfc;
+  display: flex;
+  flex-direction: row;
+  min-height: 100dvh;
+}
+
+/* Sidebar (login gradient colors) */
+.Sidebar {
+  background: #286096;
+  background: linear-gradient(-315deg, rgba(40, 96, 150, 1) 0%, rgba(21, 39, 72, 1) 100%);
+  width: 340px;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.BackButton {
+  align-self: flex-start;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.10);
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.BackButton:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.SidebarTitle {
+  color: #fcfcfc;
+  font-weight: 800;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.SidebarSubtitle {
+  margin: 8px 0 0 0;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.SidebarSection {
+  margin-top: 18px;
+  opacity: 0.95;
+}
+
+.SidebarSectionLabel {
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  opacity: 0.85;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.FolderList {
+  margin-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.FolderItem,
+.FolderItemActive {
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.FolderItem {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.FolderItemActive {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Buttons */
+.PrimaryButton {
+  margin-top: 6px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.PrimaryButton:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.SecondaryButton {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cfe0ff;
+  background: #eef4ff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.SecondaryButton:hover {
+  background: #e4eeff;
+}
+
+.TertiaryButton {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+  background: white;
+  cursor: pointer;
+}
+
+.TertiaryButton:hover {
+  background: #fafafa;
+}
+
+/* Content */
+.Content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ContentGrid {
+  width: 100%;
+  max-width: 1040px;
+  padding: 22px;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 16px;
+}
+
+/* Cards */
+.ListCard,
+.PreviewCard {
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  background: white;
+  overflow: hidden;
+}
+
+.ListHeader {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ListHeaderTitle {
+  font-weight: 800;
+}
+
+.ListBody {
+  display: grid;
+}
+
+/* Rows */
+.ListRow {
+  text-align: left;
+  padding: 12px;
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  background: white;
+  cursor: pointer;
+}
+
+.ListRow:hover {
+  background: #fafcff;
+}
+
+.ListRowActive {
+  background: #f5f8ff;
+}
+
+.RowTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.FromLine {
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.UnreadDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #286096;
+  display: inline-block;
+}
+
+.FromName {
+  color: #111827;
+}
+
+.RowDate {
+  color: #666;
+  font-size: 12px;
+}
+
+.RowSubject {
+  margin-top: 4px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.RowPreview {
+  margin-top: 4px;
+  color: #555;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* Preview */
+.PreviewCard {
+  padding: 18px;
+  min-height: 420px;
+}
+
+.PreviewHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.PreviewSubject {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.PreviewMeta {
+  margin-top: 6px;
+  color: #555;
+}
+
+.PreviewFrom {
+  font-weight: 800;
+}
+
+.PreviewDate {
+  color: #666;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.Divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 14px 0;
+}
+
+.PreviewBody {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  color: #222;
+}
+
+.PreviewActions {
+  margin-top: 18px;
+  display: flex;
+  gap: 10px;
+}
+
+.StatusText {
+  padding: 14px;
+  color: #666;
+}
+
+.ErrorText {
+  padding: 14px;
+  color: #b42318;
+  background: #fff2f0;
+  border-bottom: 1px solid #ffe1dd;
+}
+
+.HintText {
+  margin-top: 14px;
+  color: #666;
+  font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .LetterLayout {
+    flex-direction: column;
+  }
+
+  .Sidebar {
+    width: auto;
+  }
+
+  .ContentGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------LETTER/WRITE---------*/
+
+.ComposeGrid {
+  width: 100%;
+  max-width: 1040px;
+  padding: 22px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.ComposeCard {
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  background: white;
+  overflow: hidden;
+}
+
+.ComposeHeader {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ComposeTitle {
+  font-weight: 900;
+}
+
+.FormBody {
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.Field {
+  display: grid;
+  gap: 6px;
+}
+
+.Label {
+  font-size: 12px;
+  color: #374151;
+  font-weight: 700;
+}
+
+.Input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+  outline: none;
+}
+
+.Input:focus {
+  border-color: #cfe0ff;
+  box-shadow: 0 0 0 3px rgba(207, 224, 255, 0.55);
+}
+
+.Textarea {
+  width: 100%;
+  min-height: 220px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+  outline: none;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.Textarea:focus {
+  border-color: #cfe0ff;
+  box-shadow: 0 0 0 3px rgba(207, 224, 255, 0.55);
+}
+
+.ActionRow {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 14px 16px;
+  border-top: 1px solid #eee;
+  background: #fbfbfc;
+}
+
+.GhostButton {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+  background: white;
+  cursor: pointer;
+}
+
+.GhostButton:hover {
+  background: #fafafa;
+}
+
+.SmallHint {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+@media (max-width: 980px) {
+  .ComposeGrid {
+    padding: 16px;
+  }
+}
+

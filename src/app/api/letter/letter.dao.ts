@@ -7,8 +7,10 @@ import { collection, addDoc } from 'firebase/firestore';
 export type LetterData = {
   content: string;
   date: Timestamp;
+  readAt: Timestamp | null;
   receiverId: string;
   senderId: string;
+  subject: string | null;
 };
 
 export type Letter = LetterData & { id: string };
