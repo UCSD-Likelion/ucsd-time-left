@@ -1,0 +1,33 @@
+.SignUpLayout {
+	background-color: #fcfcfc;
+	display: flex;
+	flex-direction: row;
+	height: 100dvh;
+}
+.LogoSection {
+	background: #286096;
+	background: linear-gradient(-315deg,rgba(40, 96, 150, 1) 0%, rgba(21, 39, 72, 1) 100%);
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: left;
+	padding: 0% 8%;
+	max-width: 50vw;
+}
+
+.SignUpSection {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.SignUpText {
+	color: #000000;
+}
+
+.SignUpText h1 {
+	font-weight: bold;
+	font-size: 2.5rem;
+}

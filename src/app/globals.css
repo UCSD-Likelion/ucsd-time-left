@@ -1,26 +1,94 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #fcfcfc;
   /* --foreground: #171717; */
+  font-family: Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  --md-sys-color-primary: rgb(116 91 11);
+  --md-sys-color-surface-tint: rgb(116 91 11);
+  --md-sys-color-on-primary: rgb(255 255 255);
+  --md-sys-color-primary-container: rgb(255 223 147);
+  --md-sys-color-on-primary-container: rgb(89 68 0);
+  --md-sys-color-secondary: rgb(106 93 63);
+  --md-sys-color-on-secondary: rgb(255 255 255);
+  --md-sys-color-secondary-container: rgb(243 225 187);
+  --md-sys-color-on-secondary-container: rgb(81 70 42);
+  --md-sys-color-tertiary: rgb(72 101 73);
+  --md-sys-color-on-tertiary: rgb(255 255 255);
+  --md-sys-color-tertiary-container: rgb(201 235 199);
+  --md-sys-color-on-tertiary-container: rgb(49 77 51);
+  --md-sys-color-error: rgb(186 26 26);
+  --md-sys-color-on-error: rgb(255 255 255);
+  --md-sys-color-error-container: rgb(255 218 214);
+  --md-sys-color-on-error-container: rgb(147 0 10);
+  --md-sys-color-background: rgb(255 248 241);
+  --md-sys-color-on-background: rgb(31 27 19);
+  --md-sys-color-surface: rgb(255 248 241);
+  --md-sys-color-on-surface: rgb(31 27 19);
+  --md-sys-color-surface-variant: rgb(236 225 207);
+  --md-sys-color-on-surface-variant: rgb(76 70 57);
+  --md-sys-color-outline: rgb(126 118 103);
+  --md-sys-color-outline-variant: rgb(207 197 180);
+  --md-sys-color-shadow: rgb(0 0 0);
+  --md-sys-color-scrim: rgb(0 0 0);
+  --md-sys-color-inverse-surface: rgb(52 48 39);
+  --md-sys-color-inverse-on-surface: rgb(249 240 226);
+  --md-sys-color-inverse-primary: rgb(229 195 108);
+  --md-sys-color-primary-fixed: rgb(255 223 147);
+  --md-sys-color-on-primary-fixed: rgb(36 26 0);
+  --md-sys-color-primary-fixed-dim: rgb(229 195 108);
+  --md-sys-color-on-primary-fixed-variant: rgb(89 68 0);
+  --md-sys-color-secondary-fixed: rgb(243 225 187);
+  --md-sys-color-on-secondary-fixed: rgb(35 26 4);
+  --md-sys-color-secondary-fixed-dim: rgb(214 197 160);
+  --md-sys-color-on-secondary-fixed-variant: rgb(81 70 42);
+  --md-sys-color-tertiary-fixed: rgb(201 235 199);
+  --md-sys-color-on-tertiary-fixed: rgb(5 33 10);
+  --md-sys-color-tertiary-fixed-dim: rgb(174 207 172);
+  --md-sys-color-on-tertiary-fixed-variant: rgb(49 77 51);
+  --md-sys-color-surface-dim: rgb(226 217 204);
+  --md-sys-color-surface-bright: rgb(255 248 241);
+  --md-sys-color-surface-container-lowest: rgb(255 255 255);
+  --md-sys-color-surface-container-low: rgb(252 242 229);
+  --md-sys-color-surface-container: rgb(246 237 223);
+  --md-sys-color-surface-container-high: rgb(240 231 217);
+  --md-sys-color-surface-container-highest: rgb(234 225 212);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     /* --background: #0a0a0a; */
     /* --foreground: #ededed; */
+    /*
+    --md-sys-color-primary: #d0bcff;
+    --md-sys-color-on-primary: #381e72;
+
+    --md-sys-color-secondary: #ccc2dc;
+    --md-sys-color-on-secondary: #332d41;
+
+    --md-sys-color-tertiary: #efb8c8;
+    --md-sys-color-on-tertiary: #492532;
+
+    --md-sys-color-surface: #1c1b1f;
+    --md-sys-color-on-surface: #e6e1e5;
+
+    --md-sys-color-surface-container: #2a2930;
+    --md-sys-color-on-surface-variant: #cac4d0;
+
+    --md-sys-color-outline: #938f99;
+    */
   }
+
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
+
+

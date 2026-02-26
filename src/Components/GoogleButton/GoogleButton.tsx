@@ -3,7 +3,7 @@ import styles from "./GoogleButton.module.css";
 
 export function GoogleButton({ onClick, disabled}: { onClick: () => void; disabled: boolean }) {
     return (
-        <button className={styles.gsiMaterialButton} style={{ width: "300px" }} onClick={onClick} disabled={disabled}>
+        <button className={styles.gsiMaterialButton} style={{ width: "100%" }} onClick={onClick} disabled={disabled}>
           <div className={styles.gsiMaterialButtonState}></div>
           <div className={styles.gsiMaterialButtonContentWrapper}>
             <div className={styles.gsiMaterialButtonIcon}>

@@ -28,7 +28,7 @@
   vertical-align: middle;
   white-space: nowrap;
   width: auto;
-  max-width: 400px;
+  max-width: 500px;
   min-width: min-content;
 }
 
@@ -88,7 +88,7 @@
   opacity: 38%;
 }
 
-.gsiMaterialButton:not(:disabled):active .gsiMaterialButtonState, 
+.gsiMaterialButton:not(:disabled):active .gsiMaterialButtonState,
 .gsiMaterialButton:not(:disabled):focus .gsiMaterialButtonState {
   background-color: #303030;
   opacity: 12%;

@@ -21,8 +21,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
 }
 
 .LogoSection h1 {
@@ -30,4 +29,21 @@
     font-weight: bold;
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
+}
+
+.LogoSection p {
+    color: #fcfcfc;
+}
+
+.SignInText {
+    color: #000000;
+}
+
+.SignInText h1 {
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+
+.SignInText p {
+    font-size: 1.2rem;
 }
