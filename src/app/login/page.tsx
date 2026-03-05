@@ -70,7 +70,7 @@ export default function Login() {
 					<p>
 						{"Don't have an account? "}
 						<Link
-							href="#"
+							href="/signup"
 							style={{color: "#D3B66E"}}
 							className="underline hover:no-underline">
 							Create Now.
