@@ -13,7 +13,6 @@ export async function POST(req: Request){
         const lettersCol = collection(db, "letters");
         const docRef = doc(lettersCol, body.documentId);
 
-
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -23,9 +22,21 @@ export async function POST(req: Request){
                 id: body.documentId,
                 content: data.content,
                 date: data.date,
+                readAt: data.readAt,
                 receiverId: data.receiverId,
                 senderId: data.senderId,
+                subject: data.subject,
             }
+
+            // return Response.json({
+            //     id: doc.id,
+            //     content: data.content,
+            //     senderId: data.senderId,
+            //     receiverId: data.receiverId,
+            //     subject: data.subject ?? null,
+            //     dateMillis: data.date.toMillis(),
+            //     readAtMillis: data.readAt ? data.readAt.toMillis() : null,
+            //     });
             
             return Response.json(result);
         } else {
