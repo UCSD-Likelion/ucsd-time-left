@@ -1,10 +1,12 @@
 'use client';
 import { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import "@material/web/textfield/outlined-text-field";
 import "@material/web/button/filled-button.js";
 import type { MdOutlinedTextField } from "@material/web/textfield/outlined-text-field";
 
 export default function BasicInfo() {
+	const router = useRouter();
 	const [firstName, setFirstName] = useState("");
 	const [middleName, setMiddleName] = useState("");
 	const [lastName, setLastName] = useState("");
@@ -14,6 +16,7 @@ export default function BasicInfo() {
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		console.log({ firstName, middleName, lastName, dateOfBirth, studentId });
+		router.push("/onboarding/2");
 	};
 	
 	return (

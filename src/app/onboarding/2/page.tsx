@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import "@material/web/select/outlined-select";
 import "@material/web/select/select-option";
 import "@material/web/button/filled-button.js";
 import type { MdOutlinedSelect } from "@material/web/select/outlined-select";
 
 export default function AcademicBackground() {
+	const router = useRouter();
 	const [college, setCollege] = useState("");
 	const [major, setMajor] = useState("");
 	const [minor, setMinor] = useState("");
@@ -52,6 +54,7 @@ export default function AcademicBackground() {
 			minor,
 			...(isDoubleMinor && { secondMinor })
 		});
+		router.push("/onboarding/3");
 	};
 
 	return (
@@ -188,9 +191,18 @@ export default function AcademicBackground() {
 						</div>
 					)}
 
-					<md-filled-button type="submit" style={{ width: "100%" }}>
-						Continue
-					</md-filled-button>
+					<div className="flex gap-3">
+						<md-filled-button
+							type="button"
+							style={{ width: "100%" }}
+							onClick={() => router.push("/onboarding/1")}
+						>
+							Back
+						</md-filled-button>
+						<md-filled-button type="submit" style={{ width: "100%" }}>
+							Continue
+						</md-filled-button>
+					</div>
 				</form>
 			)}
 		</div>
