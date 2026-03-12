@@ -1,0 +1,616 @@
+.CapsuleLayout {
+  background-color: #fcfcfc;
+  display: flex;
+  flex-direction: row;
+  min-height: 100dvh;
+}
+
+/* Sidebar (reuse login gradient colors) */
+.Sidebar {
+  background: #286096;
+  background: linear-gradient(-315deg, rgba(40, 96, 150, 1) 0%, rgba(21, 39, 72, 1) 100%);
+  width: 340px;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Back arrow (white + bigger) */
+.BackButton {
+  align-self: flex-start;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.BackButton:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.BackButton:active {
+  transform: translateY(1px);
+}
+
+.SidebarTitle {
+  color: #fcfcfc;
+  font-weight: 800;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.SidebarSubtitle {
+  margin: 8px 0 0 0;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.SidebarSection {
+  margin-top: 18px;
+  opacity: 0.95;
+}
+
+.SidebarSectionLabel {
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  opacity: 0.85;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.FolderList {
+  margin-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.FolderItem,
+.FolderItemActive {
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+}
+
+.FolderItem {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.FolderItemActive {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Make sidebar view items clickable buttons */
+.FolderButton {
+  all: unset;
+  display: block;
+}
+
+/* Buttons */
+.PrimaryButton {
+  margin-top: 6px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.PrimaryButton:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.SecondaryButton {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cfe0ff;
+  background: #eef4ff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.SecondaryButton:hover {
+  background: #e4eeff;
+}
+
+.TertiaryButton {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+  background: white;
+  cursor: pointer;
+}
+
+.TertiaryButton:hover {
+  background: #fafafa;
+}
+
+.GhostButton {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.GhostButton:hover {
+  background: #f9fafb;
+}
+
+/* Content */
+.Content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ContentGrid {
+  width: 100%;
+  max-width: 1040px;
+  padding: 22px;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 16px;
+}
+
+.SingleColumn {
+  width: 100%;
+  max-width: 1040px;
+  padding: 22px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.ComposeGrid {
+  width: 100%;
+  max-width: 1040px;
+  padding: 22px;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.ComposeCard {
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  background: white;
+  overflow: hidden;
+}
+
+.ComposeHeader {
+  padding: 18px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.ComposeTitle {
+  font-size: 20px;
+  font-weight: 900;
+  color: #111827;
+}
+
+.FormBody {
+  padding: 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.Field {
+  display: grid;
+  gap: 8px;
+}
+
+.Label {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1f2937;
+}
+
+.Input,
+.Textarea {
+  width: 100%;
+  border: 1px solid #d8dee9;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: inherit;
+  color: #111827;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.Textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+.Input:focus,
+.Textarea:focus {
+  outline: none;
+  border-color: #8ab4ff;
+  box-shadow: 0 0 0 3px rgba(138, 180, 255, 0.18);
+}
+
+.SmallHint {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.ActionRow {
+  padding: 18px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Cards (container blocks) */
+.ListCard,
+.PreviewCard {
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  background: white;
+  overflow: hidden;
+}
+
+.ListHeader {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ListHeaderTitle {
+  font-weight: 900;
+}
+
+/* Pills */
+.PillLocked,
+.PillReady {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-weight: 800;
+}
+
+.PillLocked {
+  color: #92400e;
+  border-color: #f5d0a6;
+  background: #fff7ed;
+}
+
+.PillReady {
+  color: #065f46;
+  border-color: #a7f3d0;
+  background: #ecfdf5;
+}
+
+/* Capsule grid cards */
+.CardsGrid {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.CapsuleCard {
+  border: 1px solid #e8e8e8;
+  border-radius: 14px;
+  background: #ffffff;
+  overflow: hidden;
+  cursor: pointer;
+  display: grid;
+  aspect-ratio: 1 / 1;
+  grid-template-rows: 58% 42%;
+  position: relative;
+}
+
+.CapsuleCard:hover {
+  border-color: #d9e6ff;
+  box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
+}
+
+.CapsuleCardActive {
+  border-color: #cfe0ff;
+  box-shadow: 0 8px 22px rgba(17, 24, 39, 0.08);
+}
+
+.CapsuleThumb {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.CapsuleThumb img {
+  max-width: 78%;
+  max-height: 78%;
+  object-fit: contain;
+  opacity: 0.95;
+}
+
+.ThumbPlaceholder {
+  width: 78%;
+  height: 78%;
+  border-radius: 12px;
+  border: 1px dashed #cfe0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.BadgeWrap {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+}
+
+.LockOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.35);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.LockText {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 900;
+  color: #111827;
+}
+
+.CardBody {
+  padding: 10px;
+}
+
+.CardTopRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.CardFrom {
+  font-weight: 900;
+  color: #111827;
+  font-size: 13px;
+}
+
+.CardRelease {
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.CardSubject {
+  margin-top: 6px;
+  font-weight: 900;
+  color: #1f2937;
+}
+
+.CardPreview {
+  margin-top: 6px;
+  color: #555;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* Preview side */
+.PreviewCard {
+  padding: 18px;
+  min-height: 420px;
+}
+
+.PreviewHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.PreviewSubject {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.PreviewMeta {
+  margin-top: 6px;
+  color: #555;
+}
+
+.PreviewFrom {
+  font-weight: 800;
+}
+
+.PreviewDate {
+  color: #666;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.PreviewKpiRow {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.KpiBox {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fafafa;
+}
+
+.KpiLabel {
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.KpiValue {
+  margin-top: 6px;
+  font-weight: 900;
+  color: #111827;
+}
+
+.Divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 14px 0;
+}
+
+.PreviewBody {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  color: #222;
+}
+
+.PreviewActions {
+  margin-top: 18px;
+  display: flex;
+  gap: 10px;
+}
+
+.StatusText {
+  padding: 14px;
+  color: #666;
+}
+
+.TestPanel {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fafafa;
+  padding: 14px;
+}
+
+.TestPanelTitle {
+  font-size: 12px;
+  font-weight: 900;
+  color: #374151;
+  letter-spacing: 0.3px;
+  margin-bottom: 10px;
+}
+
+.TestPanelBody {
+  display: grid;
+  gap: 8px;
+  color: #111827;
+  line-height: 1.45;
+}
+
+.TestToolbar {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.EmptyStateCard {
+  min-height: 180px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.ExpandPanel {
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  background: white;
+  overflow: hidden;
+  padding: 16px;
+  animation: expandDown 180ms ease-out;
+}
+
+@keyframes expandDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .CapsuleLayout {
+    flex-direction: column;
+  }
+
+  .Sidebar {
+    width: auto;
+  }
+
+  .ContentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .CardsGrid {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 700px) {
+  .TestToolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .ComposeHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ActionRow {
+    flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 560px) {
+  .CardsGrid {
+    grid-template-columns: 1fr;
+  }
+}

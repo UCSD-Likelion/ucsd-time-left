@@ -1,0 +1,173 @@
+.Page {
+  min-height: 100dvh;
+  background: #fcfcfc;
+  display: flex;
+  justify-content: center;
+  padding: 28px 16px;
+}
+
+.Container {
+  width: 100%;
+  max-width: 1040px;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
+}
+
+.LeftCard,
+.RightCard {
+  border: 1px solid #e6e6e6;
+  border-radius: 16px;
+  background: white;
+  overflow: hidden;
+}
+
+.LeftCard {
+  padding: 18px;
+}
+
+.AvatarWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.AvatarPlaceholder {
+  width: 140px;
+  height: 140px;
+  border-radius: 18px;
+  border: 1px dashed #cfe0ff;
+  background: linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.Username {
+  font-size: 20px;
+  font-weight: 900;
+  color: #111827;
+  text-align: center;
+}
+
+.Bio {
+  margin-top: 8px;
+  color: #4b5563;
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.QuickRow {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.QuickItem {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fafafa;
+}
+
+.QuickLabel {
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+}
+
+.QuickValue {
+  margin-top: 6px;
+  font-weight: 900;
+  color: #111827;
+  font-size: 13px;
+}
+
+.RightCard {
+  padding: 18px;
+}
+
+.HeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.Title {
+  font-weight: 900;
+  font-size: 18px;
+  color: #111827;
+}
+
+.Subtitle {
+  margin-top: 6px;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.EditButton {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #cfe0ff;
+  background: #eef4ff;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.EditButton:hover {
+  background: #e4eeff;
+}
+
+.List {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.Item {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  background: white;
+}
+
+.Key {
+  font-weight: 900;
+  color: #111827;
+  font-size: 13px;
+}
+
+.Value {
+  color: #374151;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.Muted {
+  color: #6b7280;
+  font-weight: 700;
+}
+
+@media (max-width: 920px) {
+  .Container {
+    grid-template-columns: 1fr;
+  }
+
+  .Item {
+    grid-template-columns: 1fr;
+  }
+}
