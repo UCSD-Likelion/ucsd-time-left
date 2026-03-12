@@ -18,6 +18,7 @@ export async function getUserInfoByUid(uid: string): Promise<UserInfo | null> {
     college: String(data.college ?? ""),
     enrollment: String(data.enrollment ?? ""),
     graduation: String(data.graduation ?? ""),
+    admission: String(data.admission ?? ""),
     major: Array.isArray(data.major) ? data.major.map(String) : [],
     minor: Array.isArray(data.minor) ? data.minor.map(String) : [],
     pid: String(data.pid ?? ""),

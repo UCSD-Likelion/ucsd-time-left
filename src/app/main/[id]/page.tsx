@@ -1,5 +1,7 @@
 "use client";
 
+import QuarterAndSchoolYearBars from "@/Components/QuarterAndYearBar";
+import CollegeProgressBar from "@/Components/ProgressBar";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import type { UserInfo } from "@/types/userInfo";
@@ -44,7 +46,7 @@ export default function Main() {
     }
 
     load();
-
+    
     return () => {
       cancelled = true;
     };
@@ -52,8 +54,20 @@ export default function Main() {
 
   if (!uid) return <main style={styles.center}>Missing id</main>;
   if (loading) return <main style={styles.center}>Loading...</main>;
-  if (error) return <main style={{ ...styles.center, color: "crimson" }}>{error}</main>;
+  if (error)
+    return <main style={{ ...styles.center, color: "crimson" }}>{error}</main>;
   if (!info) return <main style={styles.center}>User not found</main>;
+
+  const username = info.username.trim();
+  const enrollment = info.enrollment.trim();
+  const college = info.college.trim();
+  const admission = info.admission.trim();     
+  const graduation = info.graduation.trim();   
+
+  const majorText = info.major.map(String).map((s) => s.trim()).filter(Boolean).join(", ");
+
+  const minorArr = info.minor.map(String).map((s) => s.trim()).filter(Boolean);
+  const minorText = minorArr.join(", ");
 
   return (
     <main style={styles.page}>
@@ -63,26 +77,27 @@ export default function Main() {
         <div style={styles.photoBox} />
 
         <div style={styles.profileText}>
-          <h1 style={styles.name}>{info.username || "No Name"}</h1>
+          <h1 style={styles.name}>{username}</h1>
 
           <div style={styles.tagRow}>
-            <span style={styles.tag}>
-              {info.enrollment || "Year not set"}
-            </span>
-            <span style={styles.tag}>
-              {info.major?.length ? info.major.join(", ") : "Major not set"}
-            </span>
+            <span style={styles.tag}>{enrollment}</span>
+            <span style={styles.tag}>{majorText}</span>
+            {minorArr.length > 0 && (
+              <span style={styles.tag}>Minor: {minorText}</span>
+            )}
           </div>
 
           <div style={styles.tagRow}>
-            <span style={styles.tag}>
-              {info.college || "College not set"}
-            </span>
+            <span style={styles.tag}>{college}</span>
           </div>
         </div>
       </section>
 
-      <section style={styles.largeBox} />
+      <section style={styles.largeBox}>
+        <CollegeProgressBar admission={admission} graduation={graduation} />
+        <QuarterAndSchoolYearBars />
+      </section>
+
       <section style={styles.largeBox} />
       <section style={styles.bottomPill} />
     </main>
@@ -91,8 +106,10 @@ export default function Main() {
 
 const styles: { [key: string]: React.CSSProperties } = {
   page: {
-    minHeight: "100vh",
-    background: "linear-gradient(180deg, #234d84 0%, #17345f 100%)",
+    width: "100%",
+    height: "3815px",
+    margin: "0 auto",
+    background: "linear-gradient(135deg, #286096 0%, #152748 100%)",
     padding: "0 0 40px 0",
   },
   center: {
@@ -103,72 +120,68 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "20px",
   },
   topBar: {
-    height: "34px",
-    background: "#6f95bf",
-    opacity: 0.9,
-    marginBottom: "28px",
+    width: "100%",
+    height: "111px",
+    background: "#FFFFFF33", 
+    marginBottom: "40px",
   },
   profileCard: {
-    width: "78%",
-    maxWidth: "760px",
+    width: "1239px", 
     margin: "0 auto 28px auto",
     background: "#f2f2f2",
-    borderRadius: "26px",
-    border: "5px solid #1ea0ff",
-    padding: "18px 20px",
+    borderRadius: "73px",
+    padding: "72px",
     display: "flex",
-    gap: "20px",
-    alignItems: "flex-start",
+    gap: "48px",
+    alignItems: "center",
   },
   photoBox: {
-    width: "135px",
-    height: "135px",
-    borderRadius: "18px",
-    background: "#d3d3d3",
+    width: "469px",
+    height: "469px",
+    borderRadius: "57px",
+    background: "#D9D9D9",
     flexShrink: 0,
   },
   profileText: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-    paddingTop: "8px",
+    justifyContent: "flex-start",
+    transform: "translateY(-100px)",
   },
   name: {
     margin: 0,
-    fontSize: "20px",
+    fontSize: "64px",
     fontWeight: 700,
     color: "#111",
   },
   tagRow: {
     display: "flex",
     flexWrap: "wrap",
-    gap: "8px",
-    marginTop: "10px",
+    gap: "12px",
+    marginTop: "12px",
   },
   tag: {
     display: "inline-block",
+    alignItems: "center",
+    justifyContent: "center",
     background: "#d2b36a",
     color: "#fff",
-    fontSize: "11px",
-    fontWeight: 600,
-    padding: "5px 10px",
+    fontSize: "20px",
+    fontWeight: 700,
+    padding: "14px 18px",
     borderRadius: "999px",
     lineHeight: 1.2,
+    whiteSpace: "nowrap",
   },
   largeBox: {
-    width: "78%",
-    maxWidth: "760px",
-    height: "380px",
+    width: "1239px",
+    maxWidth: "1239px",
+    height: "1321px",
     margin: "0 auto 20px auto",
-    background: "#f2f2f2",
-    borderRadius: "26px",
+    background: "#fcfcfc",
+    borderRadius: "73px",
+    padding: "20px",
+    boxSizing: "border-box",
   },
-  bottomPill: {
-    width: "78%",
-    maxWidth: "760px",
-    height: "48px",
-    margin: "22px auto 0 auto",
-    background: "#f2f2f2",
-    borderRadius: "999px",
-  },
+  
 };

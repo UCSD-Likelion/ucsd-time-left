@@ -7,5 +7,6 @@ export type UserInfo = {
     graduation: string;
     major: string[];
     minor: string[];
+    admission: string;
     pid: string;
   };
