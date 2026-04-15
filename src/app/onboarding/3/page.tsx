@@ -1,20 +1,104 @@
 'use client';
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import "@material/web/textfield/outlined-text-field";
 import "@material/web/button/filled-button.js";
 import type { MdOutlinedTextField } from "@material/web/textfield/outlined-text-field";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/Components/AuthProvider";
+import { clearOnboardingDraft, loadOnboardingDraft, saveOnboardingDraft } from "@/app/onboarding/onboardingStorage";
 
 export default function EnrollmentInformation() {
     const router = useRouter();
-    const [currentEnrollment, setCurrentEnrollment] = useState("");
-    const [currentYear, setCurrentYear] = useState("");
-    const [admissionDate, setAdmissionDate] = useState("");
-    const [expectedGraduationDate, setExpectedGraduationDate] = useState("");
+    const { user, loading } = useAuth();
+    const [draft] = useState(() => loadOnboardingDraft());
+    const [currentEnrollment, setCurrentEnrollment] = useState(draft.currentEnrollment);
+    const [currentYear, setCurrentYear] = useState(draft.currentYear);
+    const [admissionDate, setAdmissionDate] = useState(draft.admissionDate);
+    const [expectedGraduationDate, setExpectedGraduationDate] = useState(draft.expectedGraduationDate);
+    const [busy, setBusy] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!loading && !user) {
+            router.replace("/login?redirect=/onboarding/3");
+        }
+    }, [loading, router, user]);
+
+    const toMillis = (value: string): number | null => {
+        if (!value) return null;
+        const date = new Date(value);
+        const ms = date.getTime();
+        return Number.isFinite(ms) ? ms : null;
+    };
+
+    const normalizeStatus = (value: string): "Freshman" | "Continuing" | "Transfer" | null => {
+        const trimmed = value.trim().toLowerCase();
+        if (trimmed === "freshman") return "Freshman";
+        if (trimmed === "continuing") return "Continuing";
+        if (trimmed === "transfer") return "Transfer";
+        return null;
+    };
+
+    const normalizeYearLevel = (value: string): 2 | 3 | 4 | null => {
+        const num = Number.parseInt(value, 10);
+        return num === 2 || num === 3 || num === 4 ? num : null;
+    };
     
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log({ currentEnrollment, currentYear, admissionDate, expectedGraduationDate });
+        if (!user?.uid || busy) return;
+
+        setError(null);
+        setBusy(true);
+
+        try {
+            const draft = saveOnboardingDraft({
+                currentEnrollment,
+                currentYear,
+                admissionDate,
+                expectedGraduationDate,
+            });
+
+            const fullName = [draft.firstName, draft.middleName, draft.lastName]
+                .filter(Boolean)
+                .join(" ")
+                .trim();
+
+            const majors = [draft.major, draft.isDoubleMajor ? draft.secondMajor : ""]
+                .filter((value) => value.trim());
+            const minors = [draft.minor, draft.isDoubleMinor ? draft.secondMinor : ""]
+                .filter((value) => value.trim());
+
+            const res = await fetch("/api/user/upsert", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    profile: {
+                        uid: user.uid,
+                        username: fullName || user.displayName || "",
+                        pid: draft.studentId || null,
+                        major: majors,
+                        minor: minors,
+                        college: draft.college || null,
+                        status: normalizeStatus(draft.currentEnrollment),
+                        yearLevel: normalizeYearLevel(draft.currentYear),
+                    },
+                    birthdayMillis: toMillis(draft.dateOfBirth),
+                    enrollmentMillis: toMillis(draft.admissionDate),
+                    graduationMillis: toMillis(draft.expectedGraduationDate),
+                }),
+            });
+
+            if (!res.ok) throw new Error(await res.text());
+
+            clearOnboardingDraft();
+            router.replace("/dashboard");
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : "Failed to save onboarding";
+            setError(message);
+        } finally {
+            setBusy(false);
+        }
     };
     
     return (
@@ -65,10 +149,11 @@ export default function EnrollmentInformation() {
 						>
 							Back
 						</md-filled-button>
-						<md-filled-button type="submit" style={{ width: "100%" }}>
-							Complete
-						</md-filled-button>
+						<md-filled-button type="submit" style={{ width: "100%" }} disabled={busy}>
+                            {busy ? "Saving..." : "Complete"}
+                        </md-filled-button>
 					</div>
+                {error ? <p className="text-red-600">{error}</p> : null}
             </form>
         </div>
     );

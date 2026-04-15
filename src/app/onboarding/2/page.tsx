@@ -6,16 +6,18 @@ import "@material/web/select/outlined-select";
 import "@material/web/select/select-option";
 import "@material/web/button/filled-button.js";
 import type { MdOutlinedSelect } from "@material/web/select/outlined-select";
+import { loadOnboardingDraft, saveOnboardingDraft } from "@/app/onboarding/onboardingStorage";
 
 export default function AcademicBackground() {
 	const router = useRouter();
-	const [college, setCollege] = useState("");
-	const [major, setMajor] = useState("");
-	const [minor, setMinor] = useState("");
-	const [isDoubleMajor, setIsDoubleMajor] = useState(false);
-	const [secondMajor, setSecondMajor] = useState("");
-	const [isDoubleMinor, setIsDoubleMinor] = useState(false);
-	const [secondMinor, setSecondMinor] = useState("");
+	const [draft] = useState(() => loadOnboardingDraft());
+	const [college, setCollege] = useState(draft.college);
+	const [major, setMajor] = useState(draft.major);
+	const [minor, setMinor] = useState(draft.minor);
+	const [isDoubleMajor, setIsDoubleMajor] = useState(draft.isDoubleMajor);
+	const [secondMajor, setSecondMajor] = useState(draft.secondMajor);
+	const [isDoubleMinor, setIsDoubleMinor] = useState(draft.isDoubleMinor);
+	const [secondMinor, setSecondMinor] = useState(draft.secondMinor);
 	const [colleges, setColleges] = useState<string[]>([]);
 	const [majors, setMajors] = useState<string[]>([]);
 	const [minors, setMinors] = useState<string[]>([]);
@@ -47,12 +49,14 @@ export default function AcademicBackground() {
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log({
+		saveOnboardingDraft({
 			college,
 			major,
-			...(isDoubleMajor && { secondMajor }),
 			minor,
-			...(isDoubleMinor && { secondMinor })
+			isDoubleMajor,
+			secondMajor: isDoubleMajor ? secondMajor : "",
+			isDoubleMinor,
+			secondMinor: isDoubleMinor ? secondMinor : "",
 		});
 		router.push("/onboarding/3");
 	};

@@ -12,14 +12,15 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+import type { UserCredential } from "firebase/auth";
 import { auth } from "@/Functions/firebase/clientApp";
 
 type AuthContextValue = {
   user: User | null;
   loading: boolean;
-  loginEmail: (email: string, password: string) => Promise<void>;
-  signupEmail: (email: string, password: string) => Promise<void>;
-  loginGoogle: () => Promise<void>;
+  loginEmail: (email: string, password: string) => Promise<UserCredential>;
+  signupEmail: (email: string, password: string) => Promise<UserCredential>;
+  loginGoogle: () => Promise<UserCredential>;
   logout: () => Promise<void>;
 };
 
@@ -42,14 +43,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       user,
       loading,
       loginEmail: async (email, password) => {
-        await signInWithEmailAndPassword(auth, email, password);
+        return signInWithEmailAndPassword(auth, email, password);
       },
       signupEmail: async (email, password) => {
-        await createUserWithEmailAndPassword(auth, email, password);
+        return createUserWithEmailAndPassword(auth, email, password);
       },
       loginGoogle: async () => {
         const provider = new GoogleAuthProvider();
-        await signInWithPopup(auth, provider);
+        return signInWithPopup(auth, provider);
       },
       logout: async () => {
         await signOut(auth);

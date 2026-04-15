@@ -4,18 +4,26 @@ import { useRouter } from "next/navigation";
 import "@material/web/textfield/outlined-text-field";
 import "@material/web/button/filled-button.js";
 import type { MdOutlinedTextField } from "@material/web/textfield/outlined-text-field";
+import { loadOnboardingDraft, saveOnboardingDraft } from "@/app/onboarding/onboardingStorage";
 
 export default function BasicInfo() {
 	const router = useRouter();
-	const [firstName, setFirstName] = useState("");
-	const [middleName, setMiddleName] = useState("");
-	const [lastName, setLastName] = useState("");
-	const [dateOfBirth, setDateOfBirth] = useState("");
-	const [studentId, setStudentId] = useState("");
+	const [draft] = useState(() => loadOnboardingDraft());
+	const [firstName, setFirstName] = useState(draft.firstName);
+	const [middleName, setMiddleName] = useState(draft.middleName);
+	const [lastName, setLastName] = useState(draft.lastName);
+	const [dateOfBirth, setDateOfBirth] = useState(draft.dateOfBirth);
+	const [studentId, setStudentId] = useState(draft.studentId);
 	
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log({ firstName, middleName, lastName, dateOfBirth, studentId });
+		saveOnboardingDraft({
+			firstName,
+			middleName,
+			lastName,
+			dateOfBirth,
+			studentId,
+		});
 		router.push("/onboarding/2");
 	};
 	

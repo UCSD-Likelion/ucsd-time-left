@@ -17,22 +17,38 @@ export default function Login() {
 	
 	const { loginEmail, signupEmail, loginGoogle } = useAuth();
 	
-	const [mode, setMode] = useState<"login" | "signup">("login");
+	const [mode] = useState<"login" | "signup">("login");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState<string | null>(null);
 	const [busy, setBusy] = useState(false);
+
+	const userProfileExists = async (uid: string): Promise<boolean> => {
+		const res = await fetch(`/api/user/get?uid=${encodeURIComponent(uid)}`);
+		if (res.status === 404) return false;
+		if (!res.ok) throw new Error(await res.text());
+		return true;
+	};
+
+	const routeAfterAuth = async (uid: string) => {
+		const exists = await userProfileExists(uid);
+		router.replace(exists ? redirectTo : "/onboarding/1");
+	};
 	
 	const submit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setError(null);
 		setBusy(true);
 		try {
-			if (mode === "login") await loginEmail(email, password);
-			else await signupEmail(email, password);
-			router.replace(redirectTo);
-		} catch (err: any) {
-			setError(err?.message || "Authentication failed");
+			const cred = mode === "login"
+				? await loginEmail(email, password)
+				: await signupEmail(email, password);
+			const uid = cred.user?.uid;
+			if (!uid) throw new Error("Missing user session");
+			await routeAfterAuth(uid);
+		} catch (err: unknown) {
+			const message = err instanceof Error ? err.message : "Authentication failed";
+			setError(message);
 		} finally {
 			setBusy(false);
 		}
@@ -42,10 +58,13 @@ export default function Login() {
 		setError(null);
 		setBusy(true);
 		try {
-			await loginGoogle();
-			router.replace(redirectTo);
-		} catch (err: any) {
-			setError(err?.message || "Google sign in failed");
+			const cred = await loginGoogle();
+			const uid = cred.user?.uid;
+			if (!uid) throw new Error("Missing user session");
+			await routeAfterAuth(uid);
+		} catch (err: unknown) {
+			const message = err instanceof Error ? err.message : "Google sign in failed";
+			setError(message);
 		} finally {
 			setBusy(false);
 		}

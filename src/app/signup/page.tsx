@@ -3,20 +3,32 @@ import styles from "./signup.module.css";
 import "@material/web/textfield/outlined-text-field";
 import "@material/web/button/filled-button.js";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import type { FormEvent } from "react";
 import type { MdOutlinedTextField } from "@material/web/textfield/outlined-text-field";
-import { auth } from "@/Functions/firebase/clientApp";
+import { useAuth } from "@/Components/AuthProvider";
 
 export default function SignupPage() {
 	const router = useRouter();
 	const params = useSearchParams();
 	const redirectTo = params.get("redirect") || "/dashboard";
+	const { signupEmail } = useAuth();
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+
+	const userProfileExists = async (uid: string): Promise<boolean> => {
+		const res = await fetch(`/api/user/get?uid=${encodeURIComponent(uid)}`);
+		if (res.status === 404) return false;
+		if (!res.ok) throw new Error(await res.text());
+		return true;
+	};
+
+	const routeAfterAuth = async (uid: string) => {
+		const exists = await userProfileExists(uid);
+		router.replace(exists ? redirectTo : "/onboarding/1");
+	};
 	
 	const submit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -26,8 +38,10 @@ export default function SignupPage() {
 		setBusy(true);
 		
 		try {
-			await createUserWithEmailAndPassword(auth, email, password);
-			router.replace(redirectTo);
+			const cred = await signupEmail(email, password);
+			const uid = cred.user?.uid;
+			if (!uid) throw new Error("Missing user session");
+			await routeAfterAuth(uid);
 		} catch (err: unknown) {
 			const message =
 				err instanceof Error ? err.message : "Signup failed";
