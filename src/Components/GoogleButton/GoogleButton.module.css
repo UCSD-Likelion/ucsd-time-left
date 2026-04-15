@@ -15,8 +15,8 @@
   color: #1f1f1f;
   cursor: pointer;
   font-family: 'Roboto', arial, sans-serif;
-  font-size: 14px;
-  height: 40px;
+  font-size: 16px;
+  height: 45px;
   letter-spacing: 0.25px;
   outline: none;
   overflow: hidden;
@@ -28,7 +28,7 @@
   vertical-align: middle;
   white-space: nowrap;
   width: auto;
-  max-width: 500px;
+  max-width: 600px;
   min-width: min-content;
 }
 

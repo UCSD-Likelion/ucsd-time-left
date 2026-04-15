@@ -18,10 +18,18 @@
 }
 
 .LoginSection {
-    flex: 1;
+    flex: 1.2;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-top: 5%;
+    padding: 5rem 6rem;
+}
+
+.LoginSection > div {
+    width: 100%;
+    max-width: 600px;
+    margin-left: 10%;
 }
 
 .LogoSection h1 {
@@ -41,9 +49,36 @@
 
 .SignInText h1 {
     font-weight: bold;
-    font-size: 2.5rem;
+    font-size: 4rem;
+    margin-top: 4rem;
+    margin-bottom: 1rem;
 }
 
 .SignInText p {
     font-size: 1.2rem;
+}
+
+.donthavacc {
+    margin-bottom: 5rem;
+}
+
+.OrDivider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.OrDivider::before,
+.OrDivider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #cfcfcf;
+}
+
+.OrDivider span {
+    margin: 0 12px;
+    font-size: 0.9rem;
+    color: #7a7a7a;
 }

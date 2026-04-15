@@ -109,11 +109,21 @@ export default function Login() {
                             </p>
 						}
 						
-						<md-filled-button type="submit" disabled={busy} style={{ width: "100%", padding: 10 }}>
+						<md-filled-button type="submit" disabled={busy} style={{ width: "100%", padding: 10, fontSize: "16px", height: "45px" }}>
 							Sign in
 						</md-filled-button>
 					</form>
-					<GoogleButton onClick={google} disabled={busy} />
+
+					<div className={styles.OrDivider}>
+						<span>or</span>
+					</div>
+
+					<div style={{ marginTop: "20px", width: "100%" }} >
+						<GoogleButton 
+							onClick={google} 
+							disabled={busy}
+						/>
+					</div>
 				</div>
 				
 			</div>
