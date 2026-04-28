@@ -2,56 +2,63 @@
 
 import styles from "../capsule.module.css";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/Functions/firebase/clientApp";
+
+// ── Types ────────────────────────────────────────────────────────────────────
 
 type CreateResponse = {
   ok?: boolean;
   id?: string;
 };
 
+// ── Component ────────────────────────────────────────────────────────────────
+
 export default function WriteCapsulePage() {
   const router = useRouter();
 
-  const [senderId, setSenderId] = useState("demo-sender");
+  const [senderId, setSenderId] = useState("");
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
   const [releaseAtLocal, setReleaseAtLocal] = useState("");
   const [busy, setBusy] = useState(false);
-  const [createdCapsuleId, setCreatedCapsuleId] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
 
-  const goInbox = () => router.push("/capsule");
-  const goDashboard = () => router.push("/dashboard");
+  // ── Auth ───────────────────────────────────────────────────────────────────
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setSenderId(user?.uid ?? "");
+    });
+    return unsub;
+  }, []);
+
+  // ── Derived ────────────────────────────────────────────────────────────────
 
   const releasePreview = useMemo(() => {
-    if (!releaseAtLocal) return "";
     const ms = Date.parse(releaseAtLocal);
-    if (!Number.isFinite(ms)) return "";
-    return new Date(ms).toLocaleString();
+    return Number.isFinite(ms) ? new Date(ms).toLocaleString() : "";
   }, [releaseAtLocal]);
 
+  const canCreate =
+    !busy &&
+    senderId.trim().length > 0 &&
+    content.trim().length > 0 &&
+    releaseAtLocal.trim().length > 0;
+
+  // ── Submit ─────────────────────────────────────────────────────────────────
+
   const submit = async () => {
-    const releaseMs = releaseAtLocal ? Date.parse(releaseAtLocal) : NaN;
+    const releaseMs = Date.parse(releaseAtLocal);
 
-    if (!senderId.trim()) {
-      setStatusMessage("Please enter your user id.");
-      return;
-    }
-
-    if (!content.trim()) {
-      setStatusMessage("Please enter your letter.");
-      return;
-    }
-
-    if (!Number.isFinite(releaseMs)) {
-      setStatusMessage("Please choose a valid release date/time.");
-      return;
-    }
+    if (!senderId.trim())            return setStatusMessage("User not authenticated.");
+    if (!content.trim())             return setStatusMessage("Please enter your letter.");
+    if (!Number.isFinite(releaseMs)) return setStatusMessage("Please choose a valid release date/time.");
 
     try {
       setBusy(true);
       setStatusMessage("Creating capsule...");
-      setCreatedCapsuleId("");
 
       const res = await fetch("/api/capsule/create", {
         method: "POST",
@@ -66,32 +73,20 @@ export default function WriteCapsulePage() {
 
       const text = await res.text();
       let data: CreateResponse | null = null;
+      try { data = text ? (JSON.parse(text) as CreateResponse) : null; }
+      catch { data = null; }
 
-      try {
-        data = text ? (JSON.parse(text) as CreateResponse) : null;
-      } catch {
-        data = null;
-      }
+      if (!res.ok) throw new Error(text || "Failed to create capsule");
 
-      if (!res.ok) {
-        throw new Error(text || "Failed to create capsule");
-      }
-
-      const capsuleId = data?.id ?? "";
-      setCreatedCapsuleId(capsuleId);
-      setStatusMessage(capsuleId ? `Capsule created. Document id: ${capsuleId}` : "Capsule created.");
+      // Success — navigate to inbox (busy stays true to disable button during transition)
+      router.push("/capsule");
     } catch (e: unknown) {
       setStatusMessage(e instanceof Error ? e.message : "Failed to create capsule");
-    } finally {
       setBusy(false);
     }
   };
 
-  const canCreate =
-    !busy &&
-    senderId.trim().length > 0 &&
-    content.trim().length > 0 &&
-    releaseAtLocal.trim().length > 0;
+  // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
     <div className={styles.CapsuleLayout}>
@@ -106,32 +101,16 @@ export default function WriteCapsulePage() {
 
           <div className={styles.FormBody}>
             <div className={styles.ActionRow}>
-              <button className={styles.GhostButton} onClick={goDashboard} type="button">
+              <button className={styles.GhostButton} onClick={() => router.push("/dashboard")} type="button">
                 Back to Dashboard
               </button>
-              <button className={styles.GhostButton} onClick={goInbox} type="button">
+              <button className={styles.GhostButton} onClick={() => router.push("/capsule")} type="button">
                 Back to Capsules
               </button>
             </div>
 
             <div className={styles.Field}>
-              <label className={styles.Label} htmlFor="capsule-sender-id">
-                Your User Id
-              </label>
-              <input
-                id="capsule-sender-id"
-                className={styles.Input}
-                value={senderId}
-                onChange={(e) => setSenderId(e.target.value)}
-                placeholder="your user id"
-                autoComplete="off"
-              />
-            </div>
-
-            <div className={styles.Field}>
-              <label className={styles.Label} htmlFor="capsule-release-at">
-                Unlock At
-              </label>
+              <label className={styles.Label} htmlFor="capsule-release-at">Unlock At</label>
               <input
                 id="capsule-release-at"
                 className={styles.Input}
@@ -140,29 +119,23 @@ export default function WriteCapsulePage() {
                 onChange={(e) => setReleaseAtLocal(e.target.value)}
               />
               <div className={styles.SmallHint}>
-                {releasePreview
-                  ? `Unlock time: ${releasePreview}`
-                  : "Pick a future date/time."}
+                {releasePreview ? `Unlock time: ${releasePreview}` : "Pick a future date/time."}
               </div>
             </div>
 
             <div className={styles.Field}>
-              <label className={styles.Label} htmlFor="capsule-subject">
-                Subject
-              </label>
+              <label className={styles.Label} htmlFor="capsule-subject">Subject</label>
               <input
                 id="capsule-subject"
                 className={styles.Input}
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                placeholder="subject (optional)"
+                placeholder="Subject (optional)"
               />
             </div>
 
             <div className={styles.Field}>
-              <label className={styles.Label} htmlFor="capsule-content">
-                Message
-              </label>
+              <label className={styles.Label} htmlFor="capsule-content">Message</label>
               <textarea
                 id="capsule-content"
                 className={styles.Textarea}
@@ -172,11 +145,11 @@ export default function WriteCapsulePage() {
               />
             </div>
 
-            <div className={styles.Field}>
-              <div className={styles.Label}>Status</div>
-              <div className={styles.SmallHint}>{statusMessage || "Nothing submitted yet."}</div>
-              <div className={styles.SmallHint}>Created document id: {createdCapsuleId || "—"}</div>
-            </div>
+            {statusMessage && (
+              <div className={styles.Field}>
+                <div className={styles.SmallHint} style={{ color: "#dc2626" }}>{statusMessage}</div>
+              </div>
+            )}
 
             <div className={styles.ActionRow}>
               <button

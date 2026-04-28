@@ -1,7 +1,7 @@
 import { db } from "@/Functions/firebase/clientApp";
 import type { Capsule, CapsuleData } from "@/app/api/capsule/capsule.dao";
-import { collection, doc, getDoc } from "firebase/firestore";
-
+import { collection, doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+ 
 const capsulesCol = collection(db, "capsules");
 
 function toMillis(ts: any): number | null {
@@ -46,6 +46,10 @@ export async function POST(req: Request) {
         { ok: false, locked: true, id: docSnap.id, releaseAtMillis: releaseMs },
         { status: 403 }
       );
+    }
+
+    if (data.openedAt == null && releaseMs != null && nowMs > releaseMs) {
+      await updateDoc(docRef, { openedAt: serverTimestamp() });
     }
 
     const capsule: Capsule = { id: docSnap.id, ...data };
