@@ -17,7 +17,8 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json(user);
-  } catch {
-    return new NextResponse("Server error", { status: 500 });
+  } catch (error) {
+  console.error("POST /api/info/get failed:", error);
+  return new NextResponse("Server error", { status: 500 });
   }
-}
+} 
