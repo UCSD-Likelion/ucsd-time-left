@@ -44,4 +44,3 @@ next-env.d.ts
 certificates.env.local
 .vscode/
 
-clientApp.ts
