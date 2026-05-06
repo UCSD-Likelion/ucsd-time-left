@@ -4,9 +4,10 @@
 	flex-direction: row;
 	height: 100dvh;
 }
+
 .LogoSection {
 	background: #286096;
-	background: linear-gradient(-315deg,rgba(40, 96, 150, 1) 0%, rgba(21, 39, 72, 1) 100%);
+	background: linear-gradient(-315deg, rgba(40, 96, 150, 1) 0%, rgba(21, 39, 72, 1) 100%);
 	flex: 1;
 	display: flex;
 	flex-direction: column;
@@ -16,10 +17,30 @@
 	max-width: 50vw;
 }
 
-.SignUpSection {
-	flex: 1;
+.SignUpFormSection {
+	flex: 1.2;
 	display: flex;
 	flex-direction: column;
+	align-items: flex-start;
+	margin-top: 5%;
+	padding: 5rem 6rem;
+}
+
+.SignUpFormSection > div {
+	width: 100%;
+	max-width: 600px;
+	margin-left: 10%;
+}
+
+.LogoSection h1 {
+	color: #fcfcfc;
+	font-weight: bold;
+	font-size: 2.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.LogoSection p {
+	color: #fcfcfc;
 }
 
 .SignUpText {
@@ -28,5 +49,45 @@
 
 .SignUpText h1 {
 	font-weight: bold;
-	font-size: 2.5rem;
+	font-size: 4rem;
+	margin-top: 4rem;
+	margin-bottom: 1rem;
+}
+
+.SignUpText p {
+	font-size: 1.2rem;
+}
+
+.NameRow {
+	display: flex;
+	flex-direction: row;
+	gap: 12px;
+	width: 100%;
+	margin-bottom: 12px;
+}
+
+.NameRow md-outlined-text-field {
+	flex: 1;
+	min-width: 0;
+}
+
+.OrDivider {
+	display: flex;
+	align-items: center;
+	margin: 20px 0;
+	width: 100%;
+}
+
+.OrDivider::before,
+.OrDivider::after {
+	content: "";
+	flex: 1;
+	height: 1px;
+	background-color: #cfcfcf;
+}
+
+.OrDivider span {
+	margin: 0 12px;
+	font-size: 0.9rem;
+	color: #7a7a7a;
 }
