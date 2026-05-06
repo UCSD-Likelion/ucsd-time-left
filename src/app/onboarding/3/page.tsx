@@ -2,10 +2,13 @@
 import { useState, useEffect, type FormEvent } from "react";
 import "@material/web/textfield/outlined-text-field";
 import "@material/web/button/filled-button.js";
+import "@material/web/select/outlined-select";
+import "@material/web/select/select-option";
 import type { MdOutlinedTextField } from "@material/web/textfield/outlined-text-field";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/Components/AuthProvider";
 import { clearOnboardingDraft, loadOnboardingDraft, saveOnboardingDraft } from "@/app/onboarding/onboardingStorage";
+import {MdOutlinedSelect} from "@material/web/select/outlined-select";
 
 export default function EnrollmentInformation() {
     const router = useRouter();
@@ -106,14 +109,21 @@ export default function EnrollmentInformation() {
             <h1 className="text-2xl font-semibold mb-2">Enrollment Information</h1>
             <p className="text-gray-600 mb-6">Please provide your enrollment information.</p>
             <form onSubmit={handleSubmit} className="space-y-4">
-            <md-outlined-text-field label="Enrollment Status"
-                                        type="text"
-                                        required className="w-full"
-                                        value={currentEnrollment}
-                                        onChange={(e) =>
-                                            setCurrentEnrollment((e.currentTarget as MdOutlinedTextField).value)
-                                        }
-                />
+                <md-outlined-select required
+                                  className="w-full"
+                                  onChange={(e) =>
+                                      setCurrentEnrollment((e.currentTarget as MdOutlinedSelect).value)
+                                  } label="Enrollment Status">
+                    <md-select-option value="continuing">
+                        <div slot="headline">Continuing</div>
+                    </md-select-option>
+                    <md-select-option value="freshman">
+                        <div slot="headline">Freshman</div>
+                    </md-select-option>
+                    <md-select-option value="transfer">
+                        <div slot="headline">Transfer</div>
+                    </md-select-option>
+                </md-outlined-select>
                 
                 <md-outlined-text-field label="Current Year"
                                         type="text"
@@ -122,6 +132,7 @@ export default function EnrollmentInformation() {
                                         onChange={(e) =>
                                             setCurrentYear((e.currentTarget as MdOutlinedTextField).value)
                                         }
+                                        placeholder="20XX"
                 />
                 <md-outlined-text-field label="Admission Date"
                                         type="date"
@@ -132,6 +143,31 @@ export default function EnrollmentInformation() {
                                         }
                 />
                 
+                <md-outlined-select required
+                                    className="w-full"
+                                    onChange={(e) => console.log((e.currentTarget as any).value)}
+                                    label="Admission Term">
+                    <md-select-option value="fall">
+                        <div slot="headline">Fall</div>
+                    </md-select-option>
+                    <md-select-option value="winter">
+                        <div slot="headline">Winter</div>
+                    </md-select-option>
+                    <md-select-option value="spring">
+                        <div slot="headline">Spring</div>
+                    </md-select-option>
+                    <md-select-option value="summer">
+                        <div slot="headline">Summer</div>
+                    </md-select-option>
+                </md-outlined-select>
+                <md-outlined-text-field label="Admission Year"
+                                        type="text"
+                                        required className="w-full"
+                                        value={currentYear}
+                                        onChange={(e) => console.log((e.currentTarget as any).value)
+                                        }
+                                        placeholder="20XX"
+                />
                 <md-outlined-text-field label="Expected Graduation Date"
                                         type="date"
                                         required className="w-full"
@@ -139,6 +175,32 @@ export default function EnrollmentInformation() {
                                         onChange={(e) =>
                                             setExpectedGraduationDate((e.currentTarget as MdOutlinedTextField).value)
                                         }
+                />
+                
+                <md-outlined-select required
+                                    className="w-full"
+                                    onChange={(e) => console.log((e.currentTarget as any).value)}
+                                    label="Graduation Term">
+                    <md-select-option value="fall">
+                        <div slot="headline">Fall</div>
+                    </md-select-option>
+                    <md-select-option value="winter">
+                        <div slot="headline">Winter</div>
+                    </md-select-option>
+                    <md-select-option value="spring">
+                        <div slot="headline">Spring</div>
+                    </md-select-option>
+                    <md-select-option value="summer">
+                        <div slot="headline">Summer</div>
+                    </md-select-option>
+                </md-outlined-select>
+                <md-outlined-text-field label="Graduation Year"
+                                        type="text"
+                                        required className="w-full"
+                                        value={currentYear}
+                                        onChange={(e) => console.log((e.currentTarget as any).value)
+                                        }
+                                        placeholder="20XX"
                 />
                 
                 <div className="flex gap-3">
