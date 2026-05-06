@@ -2,6 +2,7 @@
 
 import QuarterAndSchoolYearBars from "@/Components/QuarterAndYearBar";
 import CollegeProgressBar from "@/Components/ProgressBar";
+import CalendarBigView from "@/app/calendar/CalendarBigView";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import type { UserInfo } from "@/types/userInfo";
@@ -98,7 +99,18 @@ export default function Main() {
         <QuarterAndSchoolYearBars />
       </section>
 
-      <section style={styles.largeBox} />
+      <section
+        style={{
+          ...styles.largeBox,
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
+        }}
+      >
+        <div style={{ flex: 1, minHeight: 0 }}>
+          <CalendarBigView embedded />
+        </div>
+      </section>
       <section style={styles.bottomPill} />
     </main>
   );
