@@ -121,7 +121,6 @@ export default function Login() {
 						
 						{error &&
                             <p style={{ color: "crimson"}} className="my-4">
-	                            {console.log(error)}
 	                            {(error === "Firebase: Error (auth/invalid-credential).") && "\n\nUser not found."}
 	                            {(error === "Firebase: Error (auth/too-many-requests).") && "\n\nToo Many Requests"}
 	                            {(error === "Firenase: Error (auth/invalid-password).") && "\n\nWrong Password"}
@@ -138,8 +137,8 @@ export default function Login() {
 					</div>
 
 					<div style={{ marginTop: "20px", width: "100%" }} >
-						<GoogleButton 
-							onClick={google} 
+						<GoogleButton
+							onClick={google}
 							disabled={busy}
 						/>
 					</div>
