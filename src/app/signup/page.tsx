@@ -11,7 +11,7 @@ import { useAuth } from "@/Components/AuthProvider";
 export default function SignupPage() {
 	const router = useRouter();
 	const params = useSearchParams();
-	const redirectTo = params.get("redirect") || "/dashboard";
+	const redirectTo = params.get("redirect") || "/main";
 	const { signupEmail } = useAuth();
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState<string | null>(null);

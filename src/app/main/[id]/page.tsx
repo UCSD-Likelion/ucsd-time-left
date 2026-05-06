@@ -95,7 +95,7 @@ export default function Main() {
         <QuarterAndSchoolYearBars />
       </section>
 
-      <section style={styles.largeBox} />
+      <section style={styles.largeBox2} />
       <section style={styles.bottomPill} />
     </main>
   );
@@ -180,7 +180,17 @@ majorTag: {
   wordBreak: "break-word",
   maxWidth: "100%",
 },
-  largeBox: {
+largeBox: {
+  width: "1239px",
+  maxWidth: "1239px",
+  height: "340px",
+  margin: "0 auto 20px auto",
+  background: "#fcfcfc",
+  borderRadius: "73px",
+  padding: "20px",
+  boxSizing: "border-box",
+},
+largeBox2: {
     width: "1239px",
     maxWidth: "1239px",
     height: "1321px",
