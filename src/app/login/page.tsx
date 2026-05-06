@@ -13,7 +13,7 @@ import Link from "next/link";
 export default function Login() {
 	const router = useRouter();
 	const params = useSearchParams();
-	const redirectTo = params.get("redirect") || "/dashboard";
+	const redirectTo = params.get("redirect") || "/main";
 	
 	const { loginEmail, signupEmail, loginGoogle } = useAuth();
 	
