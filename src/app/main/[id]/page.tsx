@@ -17,7 +17,8 @@ export default function Main() {
 
   useEffect(() => {
     if (!uid) return;
-
+    
+    const safeUid = uid;
     let cancelled = false;
 
     async function load() {
@@ -26,11 +27,7 @@ export default function Main() {
       setInfo(null);
 
       try {
-        const res = await fetch("/api/info/get", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ uid }),
-        });
+        const res = await fetch(`/api/user/get?uid=${encodeURIComponent(safeUid)}`);
 
         if (!res.ok) throw new Error(await res.text());
 
@@ -81,7 +78,7 @@ export default function Main() {
 
           <div style={styles.tagRow}>
             <span style={styles.tag}>{enrollment}</span>
-            <span style={styles.tag}>{majorText}</span>
+            <span style={{ ...styles.tag, ...styles.majorTag }}>{majorText}</span>
             {minorArr.length > 0 && (
               <span style={styles.tag}>Minor: {minorText}</span>
             )}
@@ -142,37 +139,47 @@ const styles: { [key: string]: React.CSSProperties } = {
     background: "#D9D9D9",
     flexShrink: 0,
   },
-  profileText: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    transform: "translateY(-100px)",
-  },
   name: {
     margin: 0,
     fontSize: "64px",
     fontWeight: 700,
     color: "#111",
   },
-  tagRow: {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "12px",
-    marginTop: "12px",
-  },
-  tag: {
-    display: "inline-block",
-    alignItems: "center",
-    justifyContent: "center",
-    background: "#d2b36a",
-    color: "#fff",
-    fontSize: "20px",
-    fontWeight: 700,
-    padding: "14px 18px",
-    borderRadius: "999px",
-    lineHeight: 1.2,
-    whiteSpace: "nowrap",
-  },
+  profileText: {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-start",
+  transform: "translateY(-100px)",
+  flex: 1,
+  minWidth: 0,
+},
+
+tagRow: {
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "12px",
+  marginTop: "12px",
+  maxWidth: "100%",
+},
+
+tag: {
+  display: "inline-block",
+  background: "#d2b36a",
+  color: "#fff",
+  fontSize: "20px",
+  fontWeight: 700,
+  padding: "14px 18px",
+  borderRadius: "999px",
+  lineHeight: 1.2,
+  whiteSpace: "nowrap",
+},
+
+majorTag: {
+  whiteSpace: "normal",
+  overflowWrap: "break-word",
+  wordBreak: "break-word",
+  maxWidth: "100%",
+},
   largeBox: {
     width: "1239px",
     maxWidth: "1239px",
