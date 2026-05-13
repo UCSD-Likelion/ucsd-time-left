@@ -511,8 +511,8 @@ export default function CapsuleInboxPage() {
           <div className={styles.ListHeader}>
             <div className={styles.ListHeaderTitle}>My Capsules</div>
             <div style={{ display: "flex", gap: 8 }}>
-              <button className={styles.GhostButton} onClick={() => router.push("/dashboard")} type="button">
-                Dashboard
+              <button className={styles.GhostButton} onClick={() => router.push("/main/uhan")} type="button">
+                Homepage
               </button>
               <button className={styles.SecondaryButton} onClick={() => router.push("/capsule/write")} type="button">
                 + Create

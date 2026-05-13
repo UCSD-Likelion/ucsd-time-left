@@ -4,56 +4,41 @@ import styles from "./profile.module.css";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-type StudentType = "Freshman" | "Continuing" | "Transfer";
+//
+// {
+//   ok, id, uid, username, college,
+//   enrollment,  — computed year level string, e.g. "Junior"
+//   admission,   — computed quarter string,    e.g. "FA 24"
+//   graduation,  — computed quarter string,    e.g. "SP 26"
+//   major,       — string[]
+//   minor,       — string[]
+//   pid,
+// }
 
 type UserWire = {
   id: string;
   uid: string;
-
   username: string;
-  bio: string | null;
-  profileImageUrl: string | null;
-
-  birthdayMillis: number | null;
-  pid: string;
-
-  majors: string[];
-  minors: string[];
-
   college: string;
-
-  studentType: StudentType;
-  yearLevel: 2 | 3 | 4 | null;
-
-  enrollmentAtMillis: number | null;
-  graduationAtMillis: number | null;
-
-  updatedAtMillis: number | null;
+  enrollment: string; // year level: "Freshman" | "Sophomore" | "Junior" | "Senior"
+  admission: string;  // quarter term: "FA 24"
+  graduation: string; // quarter term: "SP 26"
+  major: string[];
+  minor: string[];
+  pid: string;
 };
 
-function fmtDate(ms: number | null): string {
-  if (!ms) return "";
-  const d = new Date(ms);
-  return d.toLocaleDateString(undefined, { year: "numeric", month: "2-digit", day: "2-digit" });
-}
-
-function fmtMonth(ms: number | null): string {
-  if (!ms) return "";
-  const d = new Date(ms);
-  return d.toLocaleDateString(undefined, { year: "numeric", month: "2-digit" });
-}
 
 function joinOrDash(arr: string[]): string {
-  if (!arr || arr.length === 0) return "-";
-  return arr.join(", ");
+  return arr?.length ? arr.join(", ") : "-";
 }
+
 
 export default function ProfilePage() {
   const router = useRouter();
   const params = useSearchParams();
 
-  // For testing without auth: /profile?uid=YOUR_UID
-  const uid = params.get("uid") || "";
+  const uid = params.get("uid") ?? "";
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -61,7 +46,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (!uid.trim()) {
-      setError('Missing uid. Try: /profile?uid=YOUR_UID');
+      setError("Missing uid. Try: /profile?uid=YOUR_UID");
       return;
     }
 
@@ -70,15 +55,14 @@ export default function ProfilePage() {
     async function load() {
       setLoading(true);
       setError(null);
-
       try {
         const res = await fetch(`/api/user/get?uid=${encodeURIComponent(uid)}`);
         if (!res.ok) throw new Error(await res.text());
 
-        const data = (await res.json()) as { ok: boolean; user: UserWire };
-        if (!data?.ok || !data.user) throw new Error("Bad response from server");
+        const data = (await res.json()) as { ok: boolean } & UserWire;
+        if (!data?.ok) throw new Error("Bad response from server");
 
-        if (!cancelled) setUser(data.user);
+        if (!cancelled) setUser(data);
       } catch (e: unknown) {
         if (!cancelled) setError(e instanceof Error ? e.message : "Failed to load profile");
       } finally {
@@ -87,22 +71,16 @@ export default function ProfilePage() {
     }
 
     load();
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [uid]);
 
   const briefInfo = useMemo(() => {
     if (!user) return "";
-    const major = user.majors?.[0] ?? "-";
-    const college = user.college || "-";
-    return `${college} • ${major}`;
+    return `${user.college || "-"} • ${user.major?.[0] ?? "-"}`;
   }, [user]);
 
-  const editLink = useMemo(() => {
-    // Random link placeholder, you can change later
-    return `/profile/edit?uid=${encodeURIComponent(uid)}`;
-  }, [uid]);
+  const editLink = `/profile/edit?uid=${encodeURIComponent(uid)}`;
+
 
   if (loading) {
     return (
@@ -114,6 +92,8 @@ export default function ProfilePage() {
       </div>
     );
   }
+
+  // ── Error ─────────────────────────────────────────────────────────────────
 
   if (error || !user) {
     return (
@@ -131,48 +111,41 @@ export default function ProfilePage() {
     );
   }
 
-  const showYearLevel = user.studentType === "Continuing" || user.studentType === "Transfer";
 
   return (
     <div className={styles.Page}>
       <div className={styles.Container}>
-        {/* Left panel */}
+
+        {/* Left */}
         <section className={styles.LeftCard}>
           <div className={styles.AvatarWrap}>
-            {user.profileImageUrl ? (
-              <img className={styles.AvatarImg} src={user.profileImageUrl} alt="profile" />
-            ) : (
-              <div className={styles.AvatarPlaceholder}>Profile Image</div>
-            )}
+            <div className={styles.AvatarPlaceholder}>Profile image</div>
           </div>
 
-          <div className={styles.Username}>{user.username}</div>
-          <div className={styles.Bio}>{user.bio ?? "No bio yet."}</div>
-
+          <div className={styles.Username}>{user.username || "-"}</div>
           <div className={styles.BriefInfo}>{briefInfo}</div>
 
           <div className={styles.QuickRow}>
             <div className={styles.QuickItem}>
-              <div className={styles.QuickLabel}>Enrollment</div>
-              <div className={styles.QuickValue}>{fmtMonth(user.enrollmentAtMillis) || "-"}</div>
+              <div className={styles.QuickLabel}>Admission</div>
+              <div className={styles.QuickValue}>{user.admission || "-"}</div>
             </div>
             <div className={styles.QuickItem}>
               <div className={styles.QuickLabel}>Graduation</div>
-              <div className={styles.QuickValue}>{fmtMonth(user.graduationAtMillis) || "-"}</div>
+              <div className={styles.QuickValue}>{user.graduation || "-"}</div>
             </div>
           </div>
         </section>
 
-        {/* Right panel */}
+        {/* Right */}
         <section className={styles.RightCard}>
           <div className={styles.HeaderRow}>
             <div>
               <div className={styles.Title}>Profile Details</div>
               <div className={styles.Subtitle}>
-                This page is loaded from <code>/api/user/get</code>.
+                Loaded from <code>/api/user/get</code>.
               </div>
             </div>
-
             <button className={styles.EditButton} onClick={() => router.push(editLink)}>
               Edit
             </button>
@@ -180,59 +153,49 @@ export default function ProfilePage() {
 
           <div className={styles.List}>
             <div className={styles.Item}>
-              <div className={styles.Key}>생일</div>
-              <div className={styles.Value}>{fmtDate(user.birthdayMillis) || "-"}</div>
-            </div>
-
-            <div className={styles.Item}>
-              <div className={styles.Key}>PID (타이핑)</div>
+              <div className={styles.Key}>PID</div>
               <div className={styles.Value}>{user.pid || "-"}</div>
             </div>
 
             <div className={styles.Item}>
-              <div className={styles.Key}>Major (드랍다운)</div>
-              <div className={styles.Value}>{joinOrDash(user.majors)}</div>
+              <div className={styles.Key}>Major</div>
+              <div className={styles.Value}>{joinOrDash(user.major)}</div>
             </div>
 
             <div className={styles.Item}>
               <div className={styles.Key}>Minor</div>
-              <div className={styles.Value}>{joinOrDash(user.minors)}</div>
+              <div className={styles.Value}>{joinOrDash(user.minor)}</div>
             </div>
 
             <div className={styles.Item}>
-              <div className={styles.Key}>College (드랍다운)</div>
+              <div className={styles.Key}>College</div>
               <div className={styles.Value}>{user.college || "-"}</div>
             </div>
 
             <div className={styles.Item}>
-              <div className={styles.Key}>신입생/ 재학생 / 편입</div>
-              <div className={styles.Value}>
-                {user.studentType}
-                {showYearLevel && (
-                  <span className={styles.Muted}> • Year: {user.yearLevel ?? "-"}</span>
-                )}
-              </div>
+              <div className={styles.Key}>Year Level</div>
+              <div className={styles.Value}>{user.enrollment || "-"}</div>
             </div>
 
             <div className={styles.Item}>
-              <div className={styles.Key}>UCSD입학년도 월</div>
-              <div className={styles.Value}>{fmtMonth(user.enrollmentAtMillis) || "-"}</div>
+              <div className={styles.Key}>Admission Term</div>
+              <div className={styles.Value}>{user.admission || "-"}</div>
             </div>
 
             <div className={styles.Item}>
-              <div className={styles.Key}>UCSD졸업년도 월</div>
-              <div className={styles.Value}>{fmtMonth(user.graduationAtMillis) || "-"}</div>
+              <div className={styles.Key}>Graduation Term</div>
+              <div className={styles.Value}>{user.graduation || "-"}</div>
             </div>
 
             <div className={styles.Item}>
               <div className={styles.Key}>UID</div>
-              <div className={styles.Value}>
-                <code>{user.uid}</code>
-              </div>
+              <div className={styles.Value}><code>{user.uid}</code></div>
             </div>
           </div>
         </section>
+
       </div>
     </div>
   );
 }
+
